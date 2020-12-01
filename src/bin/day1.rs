@@ -1,11 +1,14 @@
 //! Advent of Code 2020: Day 1
 //! Matt Traudt (pastly)
 //! License: WTFPL
+//!
+//! See the function-specific documentation for information on how this works. The main idea is in
+//! [find_two_with_sum].
 use std::io::{self, BufRead};
 
 const MAIN_TARGET: u32 = 2020;
 
-/// Find two ints in the given slice that sum to the given target. If none do so, return None.
+/// Find two ints in the given slice that sum to the given target. If none do so, return `None`.
 ///
 /// Assume the list is already sorted.
 ///
@@ -28,9 +31,9 @@ const MAIN_TARGET: u32 = 2020;
 ///     5, 8 --> 13 DONE
 ///
 ///  This code works for the Advent of Code input, but I may not have thought about all possible
-///  no-solution exit conditions (i.e. I think maybe there should be more times when "break None;"
+///  no-solution exit conditions (i.e. I think maybe there should be more times when `break None;`
 ///  is needed).
-fn find_two_with_sum(vals: &[u32], target: u32) -> Option<(u32, u32)> {
+pub fn find_two_with_sum(vals: &[u32], target: u32) -> Option<(u32, u32)> {
     let mut left_idx = 1;
     let mut right_idx = vals.len() - 1;
     loop {
@@ -52,7 +55,7 @@ fn find_two_with_sum(vals: &[u32], target: u32) -> Option<(u32, u32)> {
 /// Part 1 challenge is to find two ints in a list that sum to the target, and produce as the
 /// answer their product.
 ///
-/// The work is done in find_two_with_sum().
+/// The work is done in [find_two_with_sum].
 fn part_one(vals: &Vec<u32>) {
     let (small, large) = find_two_with_sum(vals, MAIN_TARGET).unwrap();
     println!("Part 1");
