@@ -75,16 +75,22 @@ fn part_two(vals: &Vec<u32>) {
     let mut fixed_idx = 0;
     let (fixed, left, right) = loop {
         let fixed = vals[fixed_idx];
-        if let Some((left, right)) = find_two_with_sum(&vals[fixed_idx+1..], MAIN_TARGET - fixed) {
+        if let Some((left, right)) = find_two_with_sum(&vals[fixed_idx + 1..], MAIN_TARGET - fixed)
+        {
             break (fixed, left, right);
         }
         fixed_idx += 1;
     };
     println!("Part 2");
     println!("{} + {} + {} = {}", fixed, left, right, MAIN_TARGET);
-    println!("{} * {} * {} = {}", fixed, left, right, fixed * left * right);
+    println!(
+        "{} * {} * {} = {}",
+        fixed,
+        left,
+        right,
+        fixed * left * right
+    );
 }
-
 
 fn main() {
     let stdin = io::stdin();
