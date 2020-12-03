@@ -5,6 +5,7 @@
 //! See the function-specific documentation for information on how this works. The main idea is in
 //! [find_two_with_sum].
 use std::io::{self, BufRead};
+use std::cmp::Ordering;
 
 const MAIN_TARGET: u32 = 2020;
 
@@ -38,16 +39,16 @@ pub fn find_two_with_sum(vals: &[u32], target: u32) -> Option<(u32, u32)> {
     let mut right_idx = vals.len() - 1;
     loop {
         let sum = vals[left_idx] + vals[right_idx];
-        if sum == target {
-            break Some((vals[left_idx], vals[right_idx]));
-        } else if sum > target {
-            left_idx = 0;
-            right_idx -= 1;
-            if right_idx == 0 {
-                break None;
-            }
-        } else {
-            left_idx += 1;
+        match sum.cmp(&target) {
+            Ordering::Equal => break Some((vals[left_idx], vals[right_idx])),
+            Ordering::Greater => {
+                left_idx = 0;
+                right_idx -= 1;
+                if right_idx == 0 {
+                    break None;
+                }
+            },
+            Ordering::Less => left_idx += 1,
         }
     }
 }
@@ -56,7 +57,7 @@ pub fn find_two_with_sum(vals: &[u32], target: u32) -> Option<(u32, u32)> {
 /// answer their product.
 ///
 /// The work is done in [find_two_with_sum].
-fn part_one(vals: &Vec<u32>) {
+fn part_one(vals: &[u32]) {
     let (small, large) = find_two_with_sum(vals, MAIN_TARGET).unwrap();
     println!("Part 1");
     println!("{} + {} = {}", small, large, MAIN_TARGET);
@@ -71,7 +72,7 @@ fn part_one(vals: &Vec<u32>) {
 /// ints. If no solution is found, take the next smallest int out of the list and repeat.
 ///
 /// It's probable that I didn't consider all no-solution exit conditions.
-fn part_two(vals: &Vec<u32>) {
+fn part_two(vals: &[u32]) {
     let mut fixed_idx = 0;
     let (fixed, left, right) = loop {
         let fixed = vals[fixed_idx];
