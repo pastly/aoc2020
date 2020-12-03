@@ -7,13 +7,13 @@
 //!  the "is a valid password" criteria.
 use std::io::{self, BufRead};
 
-/// Helper type to store a parsed line into its important components. 
+/// Helper type to store a parsed line into its important components.
 ///
 ///     1. The min occurrences (part 1) or first char index (part 2)
 ///     2. The max occurrences (part 1) or second char index (part 2)
 ///     3. The important char
 ///     4. The String to be tested
-type Line = (u8, u8, char, String);
+pub type Line = (u8, u8, char, String);
 
 /// Parse an input line into its four components. Example lines:
 ///
@@ -22,7 +22,7 @@ type Line = (u8, u8, char, String);
 ///     2-9 c: ccccccccc
 ///
 /// Advent of Code input is known to be good, so lazy/liberal use of unwrap is used >:)
-fn parse_line(l: String) -> Line {
+pub fn parse_line(l: String) -> Line {
     // parse min from front of string to first '-' char
     let min: u8 = l[..l.find('-').unwrap()].parse().unwrap();
     // max is right after first '-' char and until first ' '
